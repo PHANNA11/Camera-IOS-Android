@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 File? file;
+List<XFile> xfile = [];
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
@@ -40,22 +41,38 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Container(
-          height: 300,
-          width: 300,
-          child: file == null
-              ? const SizedBox()
-              : Image(image: FileImage(File(file!.path))),
-        ),
+      body: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 3,
+        mainAxisSpacing: 3,
+        children: List.generate(xfile.length, (index) {
+          return Container(
+            height: 100,
+            width: 100,
+            color: Colors.amber,
+            child: Image(
+              image: FileImage(File(xfile[index].path)),
+            ),
+          );
+        }),
       ),
+      // body: Center(
+      //   child: Container(
+      //     height: 300,
+      //     width: 300,
+      //     child: file == null
+      //         ? const SizedBox()
+      //         : Image(image: FileImage(File(file!.path))),
+      //   ),
+      // ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                getgallary();
+                // getgallary();
+                multiImage();
               });
             },
             tooltip: 'Increment',
@@ -86,6 +103,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final files = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
       file = File(files!.path);
+    });
+  }
+
+  Future multiImage() async {
+    final List<XFile>? imageslist = await ImagePicker().pickMultiImage();
+    setState(() {
+      xfile = imageslist!;
     });
   }
 }
