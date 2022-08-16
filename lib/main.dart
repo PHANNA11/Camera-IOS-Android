@@ -34,8 +34,6 @@ class MyHomePage extends StatefulWidget {
 File? file;
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           height: 300,
           width: 300,
           child: file == null
-              ? SizedBox()
+              ? const SizedBox()
               : Image(image: FileImage(File(file!.path))),
         ),
       ),
